@@ -14,6 +14,7 @@ return (
     <React.Fragment>
         <h3> Your Order</h3>
         <p> Delicious Burger with the following ingredients : </p>
+<p><strong> Total Price : {props.price.toFixed(2)}</strong></p>
         <ul> {ingredientSummary}</ul>
         <p>continue to checkout</p>
         
