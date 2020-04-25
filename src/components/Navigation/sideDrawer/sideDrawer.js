@@ -6,21 +6,31 @@ import "./sideDrawer.css"
 
 
 const sideDrawer = (props) => {
+
     return (
 
         <React.Fragment>
 
-            <BackDrop show/>
-            <div className= "sideDrawer">
+            <BackDrop show = {props.open} clicked = {props.closed}/>
 
-            <Logo height ="11%" marginBottom = "32px"/>
+            {props.open ? 
+            <div className= "sideDrawer Open">
 
-            <nav>
-                <NavigationItems/>
-            </nav>
+                <Logo height ="11%" marginBottom = "32px"/>
 
+                <nav>
+                    <NavigationItems/>
+                </nav>
+            </div> : 
+
+            <div className= "sideDrawer Close">
+                <Logo height ="11%" marginBottom = "32px"/>
+
+                <nav>
+                    <NavigationItems/>
+                </nav>
             </div>
-
+            }
         </React.Fragment>
 
     )
