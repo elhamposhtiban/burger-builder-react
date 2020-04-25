@@ -6,7 +6,9 @@ const Logo = (props) => {
 
     return (
 
-        <div className = "Logo">
+        <div className = "Logo" 
+        style = {{ height : props.height, marginBottom: props.marginBottom}}> 
+        
           <img src = {burgerLogo} alt= "My Burger"/>
         </div>
     )
