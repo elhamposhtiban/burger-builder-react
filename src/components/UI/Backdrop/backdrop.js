@@ -5,7 +5,13 @@ import "./backdrop.css"
 const backDrop = (props) => {
     return (
 
-        props.show ? <div className= "Backdrop" onClick = {props.clicked}></div> : null
+      props.show ?
+        <div className= "Backdrop" 
+
+        onClick = {props.clicked}>
+
+        </div>
+        : null
     )
 }
 
