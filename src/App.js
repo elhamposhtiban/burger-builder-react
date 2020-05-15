@@ -11,10 +11,21 @@ class App extends Component {
     return (
 
       <div>
+      
         <Layout>
-           <BurgerBuilder/> 
-           <Checkout/>
+          <Router>
+              <Switch>
+              <Route exact path="/checkout" component = {Checkout}/>
+              <Route exact path ="/" component = {BurgerBuilder}/>
+              </Switch>
+
+          </Router>
+          {/* <BurgerBuilder/>
+          <Checkout/> */}
+
         </Layout>
+      
+
       </div>
 
     );

@@ -59,39 +59,53 @@ class BurgerBuilder extends Component {
 
    purchaseContinueHandler = () => {
 
-    this.setState({ loading: true })
+    // this.setState({ loading: true })
 
-    const order = {
+    // const order = {
 
-    ingredients: this.state.ingredients,
+    // ingredients: this.state.ingredients,
 
-    price: this.state.totalPrice,
+    // price: this.state.totalPrice,
 
-    customer: {
-        name:"Elham Poshtiban",
+    // customer: {
+    //     name:"Elham Poshtiban",
 
-        address: {
-        street: "Briar Forest Dr",
-        zipCode:"77077",
-        country: "US"
+    //     address: {
+    //     street: "Briar Forest Dr",
+    //     zipCode:"77077",
+    //     country: "US"
 
-        } , 
-        email: "test@gmail.com",
-    },
-    deliveryMethod: "fastest"
+    //     } , 
+    //     email: "test@gmail.com",
+    // },
+    // deliveryMethod: "fastest"
 
-    }
-    // alert("YOU CONTINUE!")
-    axios.post("/orders.json", order)
-    .then(response => {
+    // }
 
-        this.setState({ loading: false, purchasing: false })
-    })
-    .catch(error => 
+    // axios.post("/orders.json", order)
+    // .then(response => {
 
-        this.setState({ loading: false, purchasing: false })
+    //     this.setState({ loading: false, purchasing: false })
+    // })
+    // .catch(error => 
+
+    //     this.setState({ loading: false, purchasing: false })
         
-    )
+    // )
+
+    const queryPrams = []
+
+    // here we are setting property name = to value for the search part ! 
+    for (let i in this.state.ingredients) {
+
+        queryPrams.push(encodeURIComponent(i) + "=" + encodeURIComponent(this.state.ingredients[i]))
+    }
+    const queryString = queryPrams.join("&")
+    this.props.history.push({
+
+        pathname: "/checkout",
+        search: "?" + queryString
+    })
    }
 
 
