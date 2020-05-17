@@ -23,16 +23,16 @@ const Burger = (props) => {
         return arr.concat(el)
     }, [])
 
-    if (transformIngredient.length === 0 ) {
-        transformIngredient= <p> please add some ingredient !</p>
-    }
+    // if (transformIngredient.length === 0 ) {
+    //     transformIngredient= <p> please add some ingredient !</p>
+    // } 
 
     console.log(transformIngredient)
 
     return(
         <div className="Burger">
          <BurgerIngredient type="bread-top"/>
-            {transformIngredient}
+            {transformIngredient.length? transformIngredient : <p> please add some ingredient !</p>}
          <BurgerIngredient type="bread-bottom"/>
         </div>
     );
