@@ -1,39 +1,10 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 import { Route } from "react-router-dom";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/Checkoutsummary"
 import ContactData from "./ContactData/ContactData"
 class Checkout extends Component {
 
-    state = {
-
-        ingredients : null,
-        price : 0  
-    }
-
-
-    componentWillMount () {
-
-     const query = new URLSearchParams(this.props.location.search)
-
-     const ingredients = {};
-     let price = 0;
-     for (let param of query.entries()) {
-
-        //["salad", "1"]
-
-        if (param[0] === "price") {
-
-            price = param[1]
-
-        } else {
-
-            ingredients[param[0]] = +param[1]
-        }
-console.log("this is the price ", price)
-     }
-
-     this.setState({ingredients : ingredients, price: price})
-    }
 
     checkoutCanceledHandler = () => {
 
@@ -46,7 +17,6 @@ console.log("this is the price ", price)
         this.props.history.replace("/checkout/contact-data")
     }
 
-    
 
 
     render () {
@@ -54,15 +24,12 @@ console.log("this is the price ", price)
         return (
             <div>
                 <CheckoutSummary 
-                ingredients = {this.state.ingredients}
+                ingredients = {this.props.ings}
                 checkoutCanceled = {this.checkoutCanceledHandler}
                 checkoutContinued = {this.checkoutContinuedHandler}/>
                 <Route 
                 path={this.props.match.path + "/contact-data"}
-                render={(props)=> (<ContactData 
-                ingredients= {this.state.ingredients} 
-                price={this.state.price}
-                {...props}/>)} />
+                component = {ContactData} />
             </div>
         );
     }
@@ -70,5 +37,41 @@ console.log("this is the price ", price)
 
 
 
+const mapStateToProps = state => {
+    return {
+        ings:state.ingredients,
+        price:state.totalPrice
+    }
+}
 
-export default Checkout;
+
+export default connect(mapStateToProps)(Checkout);
+
+
+
+
+
+
+//     componentWillMount () {
+
+//      const query = new URLSearchParams(this.props.location.search)
+
+//      const ingredients = {};
+//      let price = 0;
+//      for (let param of query.entries()) {
+
+//         //["salad", "1"]
+
+//         if (param[0] === "price") {
+
+//             price = param[1]
+
+//         } else {
+
+//             ingredients[param[0]] = +param[1]
+//         }
+// console.log("this is the price ", price)
+//      }
+
+//      this.setState({ingredients : ingredients, price: price})
+//     }
