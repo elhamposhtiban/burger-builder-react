@@ -26,11 +26,11 @@ class Checkout extends Component {
 
         if(this.props.ings) {
             
-            // const purchasedRedirect = this.props.purchased? <Redirect to="/"/> : null;
-            // console.log(" i am working redirect")
+            const purchasedRedirect = this.props.purchased? <Redirect to="/"/> : null;
+            console.log(" i am working redirect")
             summary = (
                 <div>
-                    {/* {purchasedRedirect} */}
+                    {purchasedRedirect}
                 <CheckoutSummary 
                 ingredients = {this.props.ings}
                 checkoutCanceled = {this.checkoutCanceledHandler}
