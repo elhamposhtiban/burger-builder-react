@@ -14,7 +14,8 @@ const sideDrawer = (props) => {
             <BackDrop show = {props.open} clicked = {props.closed}/>
 
             {props.open ? 
-            <div className= "sideDrawer Open">
+            <div className= "sideDrawer Open"
+            onClick= {props.closed}>
 
                 <Logo height ="11%" marginBottom = "32px"/>
 

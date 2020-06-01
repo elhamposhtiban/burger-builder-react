@@ -2,10 +2,11 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/spinner";
-import axios from "../../../axios-orders"
+import axios from "../../../axios-orders";
 import Input from "../../../components/UI/Input/input";
-import withErrorHandler from "../../../WithErrorHandler/WithErrorHandler"
-import * as actions from "../../../store/action/index"
+import withErrorHandler from "../../../WithErrorHandler/WithErrorHandler";
+import * as actions from "../../../store/action/index";
+import {updateObject, checkValidity} from "../../../shared/utility";
 import "./ContactData.css";
 
 
@@ -160,64 +161,23 @@ class ContactData extends Component {
 
     }
 
-    //this is for validation
-    checkValidity (value, rules) {
-
-        let isValid = true;
-        if (!rules) {
-            return true;
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== "" && isValid
-        }
-
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid
-        }
-
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-        console.log( "this is is valid", isValid)
-  
-        return isValid
-    }
-
-
-
     //using this method in order to give on change to the form
 
     inputChangedHandler = (event, inputIdentifier) => {
 
         //we should spread this object 2 times in order to have access to nested values
             console.log(event.target.value)
-            const updatedForm = {
-                ...this.state.orderForm
-            }
 
-            const updatedElement = {
-                ...updatedForm[inputIdentifier]
-            }
+            const updatedElement =updateObject(this.state.orderForm[inputIdentifier], {
+                    value: event.target.value,
+                     //in the line below we are giving validation to the element
+                    valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+                    touched: true
+            })
 
-            updatedElement.value = event.target.value;
-
-            //in the line below we are giving validation to the element 
-
-            updatedElement.valid = this.checkValidity(updatedElement.value, updatedElement.validation)
-            updatedElement.touched=true
-
-            updatedForm[inputIdentifier] = updatedElement
+            const updatedForm = updateObject(this.state.orderForm, { 
+                [inputIdentifier] : updatedElement
+             }) 
 
             let formIsValid = true; 
             for (let inputIdentifier in updatedForm ) {

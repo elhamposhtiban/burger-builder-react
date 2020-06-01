@@ -9,7 +9,7 @@ import withErrorHandler from "../../WithErrorHandler/WithErrorHandler";
 import * as actions from "../../store/action/index"
 import axios from "../../axios-orders";
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 
     state = {
 
@@ -17,8 +17,6 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount () {
-        console.log(this.props)
-
         this.props.onInitIngredients()
     }
 

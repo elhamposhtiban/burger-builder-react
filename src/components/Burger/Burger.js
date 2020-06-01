@@ -6,8 +6,6 @@ import BurgerIngredient from "./BurgerIngredient/BurgerIngredient"
 
 const Burger = (props) => {
 
-    console.log(props)
-
     let transformIngredient = Object.keys(props.ingredients)
     .map(igKey=> {
 
@@ -22,12 +20,6 @@ const Burger = (props) => {
     .reduce((arr, el) => {
         return arr.concat(el)
     }, [])
-
-    // if (transformIngredient.length === 0 ) {
-    //     transformIngredient= <p> please add some ingredient !</p>
-    // } 
-
-    console.log(transformIngredient)
 
     return(
         <div className="Burger">
