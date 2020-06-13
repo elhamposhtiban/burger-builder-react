@@ -1,22 +1,21 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, Suspense} from 'react';
 import {connect} from "react-redux";
 import {Route, Switch, withRouter, Redirect} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import BurgerBuilder from "./container/BurgerBuilder/BurgerBuilder";
 
 import Logout from "./container/Auth/Logout/Logout";
-import asyncComponent from "../src/asyncComponent/asyncComponent"
 import * as actions from "../src/store/action/index"
 
-const asyncCheckout = asyncComponent(() => {
+const Checkout = React.lazy(() => {
   return import("./container/Checkout/checkout");
 });
 
-const asyncOrders = asyncComponent(() => {
+const Orders = React.lazy(() => {
   return import("./container/Orders/Orders");
 });
 
-const asyncAuth = asyncComponent(() => {
+const Auth = React.lazy(() => {
   return import("./container/Auth/Auth");
 });
 const App = (props) => {
@@ -29,7 +28,7 @@ const App = (props) => {
 
     let routes = (
       <Switch>
-        <Route path="/auth" component = {asyncAuth}/>
+        <Route path="/auth" render = {()=> <Auth/>}/>
         <Route exact path ="/" component = {BurgerBuilder}/>
         <Redirect to="/" />
       </Switch>
@@ -42,10 +41,10 @@ const App = (props) => {
       routes = (
         
         <Switch>
-        <Route path="/checkout" component = {asyncCheckout}/>
-        <Route path="/auth" component = {asyncAuth}/>
+        <Route path="/checkout" render = {()=> <Checkout/>}/>
+        <Route path="/auth" render = {()=> <Auth/>}/>
+        <Route path="/orders" render = {()=> <Orders/>}/>
         <Route path="/logout" component = {Logout}/>
-        <Route path="/orders" component = {asyncOrders}/>
         <Route exact path ="/" component = {BurgerBuilder}/>
         <Redirect to="/" />
         </Switch>
@@ -58,7 +57,9 @@ const App = (props) => {
       
          
             <Layout>
-                {routes}
+              <Suspense fallback={<p>... LOOOAding !</p>}>
+              {routes}
+              </Suspense>
             </Layout>
          
 
