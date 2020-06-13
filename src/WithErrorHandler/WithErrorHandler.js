@@ -1,46 +1,47 @@
-import React,{Component} from "react";
+import React,{useState, useEffect} from "react";
 import Modal from "../components/UI/Modal/modal";
 
 
 const withErrorHandler = (WrappedComponent, axios) => {
-    return class extends Component {
 
-        state = {
-            error : null
-        }
+    return props => {
 
-        componentWillMount () {
-          this.reqInterceptor = axios.interceptors.request.use(req => {
-                this.setState({error: null})
+       const [error, setError] = useState(null)
+
+
+      const   reqInterceptor = axios.interceptors.request.use(req => {
+                setError(null)
                 return req
             })
-            this.resInterceptor = axios.interceptors.response.use(res => res, error => {
-                this.setState({error: error})
+      const   resInterceptor = axios.interceptors.response.use(res => res, err => {
+                setError(err)
             })
+        
+
+            useEffect( ()=> {
+                return () => {
+
+                    axios.interceptors.request.eject(reqInterceptor);
+                    axios.interceptors.response.eject(resInterceptor)
+                }
+            }, [reqInterceptor, resInterceptor])
+
+       const   errorConfirmHandler = () => {
+            setError(null)
         }
 
-        componentWillUnmount() {
-
-            axios.interceptors.request.eject(this.reqInterceptor);
-            axios.interceptors.response.eject(this.resInterceptor)
-        }
-
-        errorConfirmHandler = () => {
-            this.setState({error: null})
-        }
-        render () {
             return (
                 <React.Fragment>
                     <Modal 
-                    show = {this.state.error}
-                    modalClosed = {this.errorConfirmHandler}
+                    show = {error}
+                    modalClosed = {errorConfirmHandler}
                     >
-                       { this.state.error? this.state.error.message: null}
+                       { error? error.message: null}
                     </Modal>
-                    <WrappedComponent {...this.props}/>
+                    <WrappedComponent {...props}/>
                 </React.Fragment>
             ) 
-        }
+        
     }
 }
 
