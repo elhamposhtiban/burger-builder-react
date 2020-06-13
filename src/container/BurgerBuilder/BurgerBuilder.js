@@ -15,7 +15,7 @@ const BurgerBuilder = (props) => {
 
     useEffect(() => {
         props.onInitIngredients()
-    }) 
+    }, []) 
 
    const updatePurchaseHandler= (ingredients) => {
         const sum = Object.keys(ingredients)
