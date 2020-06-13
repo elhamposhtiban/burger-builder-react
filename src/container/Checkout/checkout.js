@@ -4,46 +4,43 @@ import { Route, Redirect } from "react-router-dom";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/Checkoutsummary"
 import ContactData from "./ContactData/ContactData";
 
-class Checkout extends Component {
+const Checkout = (props) => {
 
 
-    checkoutCanceledHandler = () => {
+   const  checkoutCanceledHandler = () => {
 
-    this.props.history.goBack()
+    props.history.goBack()
 
     }
 
-    checkoutContinuedHandler = () => {
+    const  checkoutContinuedHandler = () => {
 
-        this.props.history.replace("/checkout/contact-data")
+        props.history.replace("/checkout/contact-data")
     }
 
-
-
-    render () {
 
         let summary = <Redirect to="/"/>
 
-        if(this.props.ings) {
+        if(props.ings) {
             
-            const purchasedRedirect = this.props.purchased? <Redirect to="/"/> : null;
+            const purchasedRedirect = props.purchased? <Redirect to="/"/> : null;
             console.log(" i am working redirect")
             summary = (
                 <div>
                     {purchasedRedirect}
                 <CheckoutSummary 
-                ingredients = {this.props.ings}
-                checkoutCanceled = {this.checkoutCanceledHandler}
-                checkoutContinued = {this.checkoutContinuedHandler}/>
+                ingredients = {props.ings}
+                checkoutCanceled = {checkoutCanceledHandler}
+                checkoutContinued = {checkoutContinuedHandler}/>
                 <Route 
-                path={this.props.match.path + "/contact-data"}
+                path={props.match.path + "/contact-data"}
                 component = {ContactData} />
                 </div>
 
             )
         }
         return  summary ;
-    }
+
 }
 
 
@@ -67,7 +64,7 @@ export default connect(mapStateToProps)(Checkout);
 
 //     componentWillMount () {
 
-//      const query = new URLSearchParams(this.props.location.search)
+//      const query = new URLSearchParams(props.location.search)
 
 //      const ingredients = {};
 //      let price = 0;
@@ -86,5 +83,5 @@ export default connect(mapStateToProps)(Checkout);
 // console.log("this is the price ", price)
 //      }
 
-//      this.setState({ingredients : ingredients, price: price})
+//      setState({ingredients : ingredients, price: price})
 //     }
