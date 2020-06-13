@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from "react-redux";
 import {Route, Switch, withRouter, Redirect} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
@@ -19,15 +19,13 @@ const asyncOrders = asyncComponent(() => {
 const asyncAuth = asyncComponent(() => {
   return import("./container/Auth/Auth");
 });
-class App extends Component {
+const App = (props) => {
 
-  componentDidMount() {
+  useEffect( () => {
 
-    this.props.onTryAutoSignup()
-  }
-
-  render () {
-
+    props.onTryAutoSignup()
+  
+  },[]) 
 
     let routes = (
       <Switch>
@@ -40,7 +38,7 @@ class App extends Component {
     
 
 
-    if (this.props.isAuthenticated) {
+    if (props.isAuthenticated) {
       routes = (
         
         <Switch>
@@ -68,8 +66,6 @@ class App extends Component {
       </div>
 
     );
-  }
-
 }
 
 const mapStateToProps = state => {
