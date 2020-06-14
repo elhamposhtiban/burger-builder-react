@@ -13,7 +13,7 @@ const BurgerBuilder = (props) => {
 
     const [purchasing, setPurchasing] = useState(false)
     const {onInitIngredients} = props
-    useEffect(() => {
+    useEffect((props) => {
         props.onInitIngredients()
     }, [onInitIngredients]) 
 

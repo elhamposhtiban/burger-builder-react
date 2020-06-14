@@ -10,7 +10,7 @@ import * as actions from "../../store/action/index";
 const Orders = (props) =>  {
     const {onFetchOrders} = props
 
-    useEffect (()=> {
+    useEffect ((props) => {
 
         onFetchOrders(props.token, props.userId)
     }, [onFetchOrders]) 
