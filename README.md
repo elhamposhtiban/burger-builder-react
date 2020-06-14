@@ -25,7 +25,7 @@ Local Use
 
 ## Animated Gifs/Pictures of App
  
- 1:  ![Application](/src/assets/my-burger.gif)
+ 1:  ![Application](src/assets/my-burger.gif)
 
 
 
